@@ -1,7 +1,13 @@
 NAME =	so_long
 
 
-SRCS = 		main.c
+SRCS = 		main.c\
+			parsing.c\
+			libft_utils.c\
+			kill.c\
+			gnl.c\
+			gnl_utils.c\
+			init.c
 				
 
 OBJS =	$(SRCS:.c=.o)

@@ -1,81 +1,5 @@
-#include "so_long.h"
-#include <stdio.h>
-#include <stdlib.h>
-#define RES_Y 1080
-#define RES_X 1920
-#define RED 0xFF0000
-#define GREEN 0x00FF00
-#define BLUE 0x0000FF
-#define BLACK 0x0
-#define WHITE 0xFFFFFF
-#define SUCCESS 0
-#define FAILURE 1
-#define MES_COUILLES 123
+#include "includes/so_long.h"
 
-typedef struct  s_data {
-    void    *img;
-    char    *addr;
-    int     bits_per_pixel;
-    int     line_length;
-    int     endian;
-}               t_data;
-
-typedef struct  s_pt
-{
-    int x;
-    int y;
-}               t_pt;
-
-typedef struct  s_list
-{
-    void            *data;
-    struct s_list   *next;
-}               t_list;
-
-
-typedef struct  s_config
-{
-    void    *mlx;
-    void    *mlx_win;
-    t_data  *img;
-    /* data */
-    t_pt    player;
-    char    **map;
-    t_list  *lines;
-    int     collectibles;
-}              t_config;
-
-// initializations.c
-void init_struct_config(t_config *c)
-{
-    c->mlx = NULL;
-    c->mlx_win = NULL;
-    c->map = NULL;
-    c->img->img = NULL;
-    c->img->addr = NULL;
-    c->lines = NULL;
-    c->player.x = -1;
-    c->player.y = -1;
-    c->collectibles = 0;
-}
-
-void    terminator(t_config *c/*, int error AVEC CODES D'ERREUR CORRESPONDANTS*/)
-{
-    // if (error)
-    // put_error(error);
-    if (c->img->img != NULL)
-        mlx_destroy_image(c->mlx, c->img->img);
-    if (c->mlx_win != NULL)
-        mlx_destroy_window(c->mlx, c->mlx_win);
-    if (c->mlx != NULL)
-    {
-        mlx_destroy_display(c->mlx);
-        free(c->mlx);
-        
-    }
-    // if (c->map != NULL)
-    //     free_tab(c->map);
-}
 
 // mlx_utils.c
 void    my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -165,8 +89,8 @@ int    start_mlx(t_config *c)
     c->mlx = mlx_init();
     if (c->mlx == NULL)
         return (FAILURE);
-//    c->mlx_win = mlx_new_window(c->mlx, RES_X, RES_Y, "so_long");
-   c->mlx_win = NULL;
+    c->mlx_win = mlx_new_window(c->mlx, RES_X, RES_Y, "so_long");
+ //  c->mlx_win = NULL;
     if (c->mlx_win == NULL)
     {
         terminator(c);
@@ -184,7 +108,7 @@ int    start_mlx(t_config *c)
 }
 
 // main.c
-int	main(void)
+int main(int argc, const char *argv[])
 {
 	// void	    *mlx;
 	// void    	*mlx_win;
@@ -193,6 +117,8 @@ int	main(void)
 
     c.img = &img;
     init_struct_config(&c);
+    if (parsing(argc, argv, &c) == FAILURE)
+        return (FAILURE);
     if (start_mlx(&c) != SUCCESS)
         return (FAILURE);
 //	img.img = mlx_new_image(mlx, RES_X, RES_Y);
