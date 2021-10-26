@@ -21,6 +21,14 @@
 # include <string.h>
 # include <fcntl.h>
 
+enum    
+{
+    ERR_ARGC = 1,
+    ERR_ARGV,
+    ERR_OPEN,
+    ERR_READ
+};
+
 typedef struct  s_data {
     void    *img;
     char    *addr;
@@ -59,6 +67,7 @@ void init_struct_config(t_config *c);
 
 // kill.c
 int     terminator(t_config *c); /*, int error AVEC CODES D'ERREUR CORRESPONDANTS)*/
+int     terminator2(t_config *c, int code);
 
 // libft_utils.c
 int     ft_strlen(const char *s);
@@ -66,7 +75,12 @@ int     ft_strncmp(const char *s1, const char *s2, size_t n);
 
 
 // parsing.c
+int last_check(t_config *c);
 int check_arg_name(char const *argv[], t_config *c);
 int parsing(int argc, const char *argv[], t_config *c);
+
+// map.c
+int add_line_in_lines(char *line, t_config *c);
+void show_list(t_config *c);
 
 #endif

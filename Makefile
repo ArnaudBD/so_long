@@ -7,7 +7,8 @@ SRCS = 		main.c\
 			kill.c\
 			gnl.c\
 			gnl_utils.c\
-			init.c
+			init.c\
+			map.c
 				
 
 OBJS =	$(SRCS:.c=.o)

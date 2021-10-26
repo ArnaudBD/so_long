@@ -12,4 +12,5 @@ void init_struct_config(t_config *c)
     c->player.y = -1;
     c->collectibles = 0;
     c->exit = 0;
+    c->lines = NULL;
 }

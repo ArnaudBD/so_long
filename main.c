@@ -135,5 +135,6 @@ int main(int argc, const char *argv[])
     mlx_mouse_hook(c.mlx_win, fonction_enregistee_pour_souris, &c);
     mlx_key_hook(c.mlx_win, fonction_enregistree_pour_clavier, &c);
     mlx_loop(c.mlx);
+    terminator2(&c, 0);
     return (1);
 }

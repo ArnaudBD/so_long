@@ -1,6 +1,26 @@
 #include "includes/so_long.h"
 #include "includes/gnl.h"
 
+int last_check(t_config *c)
+{
+    int     i;
+    t_list  *last_line;
+
+    i = 0;
+    last_line = c->lines;
+    while (last_line->next)
+        last_line = last_line->next;
+    while (((char *)last_line->data)[i])
+        {
+            if ((((char *)last_line->data)[i]) != '1')
+                return (FAILURE);
+            i++;
+        } 
+    if (c->collectibles == 0 || c->exit != 1 || c->player.x == -1)
+        return (FAILURE);
+    return (SUCCESS);
+}
+
 int parse_line(char *line, t_config *c)
 {
     int i;
@@ -25,6 +45,8 @@ int parse_line(char *line, t_config *c)
             c->collectibles++;
         i++;
     }
+    if (add_line_in_lines(line, c) == FAILURE)
+        return (FAILURE);
     return (SUCCESS);
 }
 
@@ -46,15 +68,23 @@ int parsing(int argc, const char *argv[], t_config *c)
     int                 fd;
     char                *line;
     long unsigned int   len;
+    char                buf;
 
     len = 0;
     if (argc != 2 || argv[1] == NULL)
-        return (terminator(c));
+        return (terminator2(c, ERR_ARGC));
     if (check_arg_name(argv, c) == FAILURE)
-        return (FAILURE);
+        //return (FAILURE);
+        return (terminator2(c, ERR_ARGV));
     fd = open(argv[1], O_RDONLY);
     if (fd == -1)
-        return (terminator(c));
+        //return (terminator(c));
+        return (terminator2(c, ERR_OPEN));
+    if (read(fd, &buf, 0) == -1)
+    {
+        perror("Error - cannot read\n");
+        return (FAILURE);
+    }
     while (get_next_line(fd, &line) == 1)
     {
         if (parse_line(line, c) == FAILURE)
@@ -68,10 +98,9 @@ int parsing(int argc, const char *argv[], t_config *c)
             return (terminator(c));
         }
         len = strlen(line);
-        free(line);
     }
     free(line);
-    if (c->collectibles == 0 || c->exit != 1 || c->player.x == -1)
+    if (last_check(c) == FAILURE)
         return (FAILURE);
     return (SUCCESS);
 }
