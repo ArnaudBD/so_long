@@ -119,6 +119,9 @@ int main(int argc, const char *argv[])
     init_struct_config(&c);
     if (parsing(argc, argv, &c) == FAILURE)
         return (FAILURE);
+    if (create_map(&c) != SUCCESS)
+        return (FAILURE);
+    // show_map(&c);
     if (start_mlx(&c) != SUCCESS)
         return (FAILURE);
 //	img.img = mlx_new_image(mlx, RES_X, RES_Y);

@@ -26,7 +26,9 @@ enum
     ERR_ARGC = 1,
     ERR_ARGV,
     ERR_OPEN,
-    ERR_READ
+    ERR_READ,
+    ERR_MAP_MALLOC,
+    ERR_MAP_LINE_MALLOC
 };
 
 typedef struct  s_data {
@@ -56,6 +58,7 @@ typedef struct  s_config
     void    *mlx_win;
     t_data  *img;
     t_pt    player;
+    t_pt    size_map;
     int     exit;
     int     collectibles;
     char    **map;
@@ -80,7 +83,9 @@ int check_arg_name(char const *argv[], t_config *c);
 int parsing(int argc, const char *argv[], t_config *c);
 
 // map.c
+int create_map(t_config *c);
 int add_line_in_lines(char *line, t_config *c);
 void show_list(t_config *c);
+void    show_map(t_config *c);
 
 #endif

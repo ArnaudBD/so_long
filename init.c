@@ -10,6 +10,8 @@ void init_struct_config(t_config *c)
     c->lines = NULL;
     c->player.x = -1;
     c->player.y = -1;
+    c->size_map.x = -1;
+    c->size_map.y = 0;
     c->collectibles = 0;
     c->exit = 0;
     c->lines = NULL;
