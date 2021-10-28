@@ -35,13 +35,19 @@ void    display_error(int code)
     else if (code == ERR_ARGV)
         printf("wrong file name\n");
     else if (code == ERR_OPEN)
-        perror("could not open() file\n");
+        printf("could not open() file\n");
     else if (code == ERR_MAP)
         printf("wrong map design\n");
     else if (code == ERR_MAP_MALLOC)
         printf("Malloc error while creating map\n");
     else if (code == ERR_MAP_LINE_MALLOC)
         printf("Malloc error while creating the linked chain\n");
+    else if (code == ERR_DRAWING)
+        printf("Error while drawing the map\n");
+    else if (code == ERR_NAME)
+        printf("The file has a wrong name\n");
+    else if (code == ERR_READ)
+        printf("Cannot read\n");
 
 
 }
@@ -81,5 +87,8 @@ int terminator2(t_config *c, int code)
         display_error(code);
         return (FAILURE);
     }
+    // mlx_destroy_display(c->mlx);
+    // mlx_destroy_image(c->mlx, c->img->img);
+    // mlx_destroy_window(c->mlx, c->mlx_win);
     return (SUCCESS);
 }

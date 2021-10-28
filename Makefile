@@ -10,7 +10,9 @@ SRCS = 		main.c\
 			init.c\
 			map.c\
 			draw_map.c\
-			mlx_utils.c
+			mlx_utils.c\
+			hooks.c\
+			moves.c
 				
 
 OBJS =	$(SRCS:.c=.o)

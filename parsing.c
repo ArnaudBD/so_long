@@ -21,7 +21,7 @@ int last_check(t_config *c)
         } 
         if (i != c->size_map.x)
             return (FAILURE);
-    if (c->collectibles == 0 || c->exit != 1 || c->player.x == -1)
+    if (c->collectibles == 0 || c->exit.x != -1 || c->player.x == -1)
         return (FAILURE);
     return (SUCCESS);
 }
@@ -44,7 +44,7 @@ int parse_line(char *line, t_config *c)
         else if (line[i] == 'P')
             c->player.x = i;
         if (line[i] == 'E')
-            c->exit++;
+            c->exit.x++;
         if (line[i] == 'C')
             c->collectibles++;
         i++;
@@ -61,9 +61,8 @@ int check_arg_name(char const *argv[], t_config *c)
 
     i = ft_strlen(argv[1]) - 4;
     str = ".ber";
-
     if (ft_strncmp((str), &argv[1][i], 5))
-        return (terminator(c));
+        return (terminator2(c, ERR_NAME));
     return (SUCCESS);
 }
 
@@ -83,10 +82,7 @@ int parsing(int argc, const char *argv[], t_config *c)
     if (fd == -1)
         return (terminator2(c, ERR_OPEN));
     if (read(fd, &buf, 0) == -1)
-    {
-        perror("Error - cannot read\n");
-        return (FAILURE);
-    }
+        return (terminator2(c, ERR_READ));
     while (get_next_line(fd, &line) == 1)
     {
         if (parse_line(line, c) == FAILURE)
@@ -95,10 +91,7 @@ int parsing(int argc, const char *argv[], t_config *c)
             return (terminator2(c, ERR_MAP));
         }
         if (len > 0 && len != strlen(line))
-        {
-            free(line);
-            return (terminator(c));
-        }
+            return (terminator2(c, ERR_MAP));
         len = strlen(line);
     }
     free(line);

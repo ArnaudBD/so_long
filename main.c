@@ -34,43 +34,7 @@ printf("souris b = %d\n", button);
     }
     mlx_put_image_to_window(c->mlx, c->mlx_win, c->img->img, 0, 0);
 
-    return (MES_COUILLES);
-}
-
-void    fill_color(t_data *img, int color)
-{
-    int x = 0;
-    int y = 0;
-    while (y < RES_Y)
-    {
-        x = 0;
-        while (x < RES_X)
-        {
-            my_mlx_pixel_put(img, x, y, color);
-            x++;
-        }
-        y++;
-    }
-}
-
-
-int fonction_enregistree_pour_clavier(int keycode, t_config *c)
-{
-    if (keycode == 'w' || keycode == 's' || keycode == 'd' || keycode == 'a' )
-    {
-        if (keycode == 'w')
-            fill_color(c->img, BLUE);
-        else if (keycode == 's')
-            fill_color(c->img, RED);
-        else if (keycode == 'a')
-            fill_color(c->img, GREEN);
-        else if (keycode == 'd')
-            fill_color(c->img, WHITE);
-        mlx_put_image_to_window(c->mlx, c->mlx_win, c->img->img, 0, 0);
-    }
-
-    printf("touche entree = %d\n", keycode);
-    return (MES_COUILLES);
+    return (1);
 }
 
 // mlx_utils.c
@@ -115,7 +79,8 @@ int main(int argc, const char *argv[])
     show_map(&c);
     if (start_mlx(&c) != SUCCESS)
         return (FAILURE);
-//	img.img = mlx_new_image(mlx, RES_X, RES_Y);
+    map_drawer(&c);
+	// img.img = mlx_new_image(mlx, RES_X, RES_Y);
     // if (!mlx_new_image)
     //     terminator();
 	//img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
@@ -124,10 +89,11 @@ int main(int argc, const char *argv[])
     //     terminator();
     // c.mlx_win = mlx_win;
     // c.mlx = mlx;
-    fill_color(&img, BLACK);
-    mlx_put_image_to_window(c.mlx, c.mlx_win, c.img->img, 0, 0);
-    mlx_mouse_hook(c.mlx_win, fonction_enregistee_pour_souris, &c);
-    mlx_key_hook(c.mlx_win, fonction_enregistree_pour_clavier, &c);
+    // fill_color(&img, BLACK);
+    // mlx_put_image_to_window(c.mlx, c.mlx_win, c.img->img, 0, 0);
+    // mlx_mouse_hook(c.mlx_win, fonction_enregistee_pour_souris, &c);
+    if (mlx_key_hook(c.mlx_win, key_hook, &c) == FAILURE)
+        return (FAILURE);
     mlx_loop(c.mlx);
     terminator2(&c, 0);
     return (1);

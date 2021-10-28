@@ -13,6 +13,9 @@ void init_struct_config(t_config *c)
     c->size_map.x = -1;
     c->size_map.y = 0;
     c->collectibles = 0;
-    c->exit = 0;
+    c->exit.x = -2;
+    c->exit.y = -1;
     c->lines = NULL;
+    c->collected = 0;
+    c->open = 0;
 }
