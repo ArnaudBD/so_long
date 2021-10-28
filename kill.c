@@ -29,14 +29,27 @@ int terminator(t_config *c) /*, int error AVEC CODES D'ERREUR CORRESPONDANTS)*/
 
 void    display_error(int code)
 {
-    perror("so_long: ERROR - ");
+    printf("so_long: ERROR - ");
     if (code == ERR_ARGC)
-        perror("wrong argument count\n");
+        printf("wrong argument count\n");
     else if (code == ERR_ARGV)
-        perror("wrong file name\n");
+        printf("wrong file name\n");
     else if (code == ERR_OPEN)
         perror("could not open() file\n");
+    else if (code == ERR_MAP)
+        printf("wrong map design\n");
+    else if (code == ERR_MAP_MALLOC)
+        printf("Malloc error while creating map\n");
+    else if (code == ERR_MAP_LINE_MALLOC)
+        printf("Malloc error while creating the linked chain\n");
+
+
 }
+
+// void    free_tab(t_config *c)
+// {
+//     c->
+// }
 
 int terminator2(t_config *c, int code)
 {
@@ -57,10 +70,12 @@ int terminator2(t_config *c, int code)
     while (current)
     {
         current = c->lines->next;
+        free(c->lines->data);
         free(c->lines);
+        c->lines = current;
     }
-    // if (c->map != NULL)
-    //     free_tab(c->map);
+    if (c->map != NULL)
+        free(c->map);
     if (code != 0)
     {
         display_error(code);

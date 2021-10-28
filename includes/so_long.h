@@ -28,7 +28,8 @@ enum
     ERR_OPEN,
     ERR_READ,
     ERR_MAP_MALLOC,
-    ERR_MAP_LINE_MALLOC
+    ERR_MAP_LINE_MALLOC,
+    ERR_MAP
 };
 
 typedef struct  s_data {
@@ -76,6 +77,8 @@ int     terminator2(t_config *c, int code);
 int     ft_strlen(const char *s);
 int     ft_strncmp(const char *s1, const char *s2, size_t n);
 
+// mlx_utils.c
+void    my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 // parsing.c
 int last_check(t_config *c);

@@ -37,27 +37,18 @@ int create_map(t_config *c)
     t_list  *current;
     int     map_size;
 
-    i = 0;
     current = c->lines;
     map_size_calculator(c);
+    i = c->size_map.y;
     map_size = (c->size_map.y + 1) * (c->size_map.x + 2) + 1;
-printf("map size == %d\n", map_size);
     (c->map) = malloc(sizeof(char) * map_size);
     if (c->map == NULL)
         return (terminator2(c, ERR_MAP_MALLOC));
     while (current)
     {
-write(1, "ICI\n", 4);
         (c->map)[i] = current->data;
-        i++;
+        i--;
         current = current->next;
-write(1, "LA\n", 3);
-    }
-    i = 56;
-    while (i)
-    {
-        c->map[map_size - i] = 0;
-        printf("%d\n", i--);
     }
     return (SUCCESS);
 }
@@ -79,9 +70,10 @@ void    show_map(t_config *c)
     int i;
 
     i = 0;
-    while (c->map[i])
+    printf("          | THE MAP |\n          V         V\n");
+    while (i <= c->size_map.y)
     {
-        printf("|%s|\n", c->map[i++]);
+        printf("i == %d - |%s|\n", i, c->map[i]);
+        i++;
     }
-    write(1, "FIN\n", 4);
 }

@@ -1,15 +1,5 @@
 #include "includes/so_long.h"
 
-
-// mlx_utils.c
-void    my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-    char    *dst;
-
-    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-    *(unsigned int*)dst = color;
-}
-
 // hooks.c
 int     fonction_enregistee_pour_souris(int button, int x, int y, t_config *c)
 {
@@ -119,9 +109,10 @@ int main(int argc, const char *argv[])
     init_struct_config(&c);
     if (parsing(argc, argv, &c) == FAILURE)
         return (FAILURE);
+    show_list(&c);
     if (create_map(&c) != SUCCESS)
         return (FAILURE);
-    // show_map(&c);
+    show_map(&c);
     if (start_mlx(&c) != SUCCESS)
         return (FAILURE);
 //	img.img = mlx_new_image(mlx, RES_X, RES_Y);

@@ -8,7 +8,9 @@ SRCS = 		main.c\
 			gnl.c\
 			gnl_utils.c\
 			init.c\
-			map.c
+			map.c\
+			draw_map.c\
+			mlx_utils.c
 				
 
 OBJS =	$(SRCS:.c=.o)

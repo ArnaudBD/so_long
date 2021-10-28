@@ -9,13 +9,18 @@ int last_check(t_config *c)
     i = 0;
     last_line = c->lines;
     while (last_line->next)
+    {
         last_line = last_line->next;
-    while (((char *)last_line->data)[i])
+    }
+    while (((char *)last_line->data)[i] == '1')
         {
-            if ((((char *)last_line->data)[i]) != '1')
-                return (FAILURE);
+            if ((((char *)last_line->data)[i]) != '1' 
+                || ((char *)c->lines->data)[i] != '1')
+                break ;
             i++;
         } 
+        if (i != c->size_map.x)
+            return (FAILURE);
     if (c->collectibles == 0 || c->exit != 1 || c->player.x == -1)
         return (FAILURE);
     return (SUCCESS);
@@ -24,16 +29,15 @@ int last_check(t_config *c)
 int parse_line(char *line, t_config *c)
 {
     int i;
-    int len;
 
     i = 0;
-    len = strlen(line);
+    c->size_map.x = strlen(line);
     while (line[i])
     {
         if (line[i] != '1' && line[i] != '0' && line[i] != 'P' \
             && line[i] != 'E' && line[i] != 'C')
             return (FAILURE);
-        if (line[0] != '1' || line[len - 1] != '1')
+        if (line[0] != '1' || line[c->size_map.x - 1] != '1')
             return (FAILURE);
         if (line[i] == 'P' && c->player.x >= 0)
             return (FAILURE);
@@ -74,11 +78,9 @@ int parsing(int argc, const char *argv[], t_config *c)
     if (argc != 2 || argv[1] == NULL)
         return (terminator2(c, ERR_ARGC));
     if (check_arg_name(argv, c) == FAILURE)
-        //return (FAILURE);
         return (terminator2(c, ERR_ARGV));
     fd = open(argv[1], O_RDONLY);
     if (fd == -1)
-        //return (terminator(c));
         return (terminator2(c, ERR_OPEN));
     if (read(fd, &buf, 0) == -1)
     {
@@ -90,7 +92,7 @@ int parsing(int argc, const char *argv[], t_config *c)
         if (parse_line(line, c) == FAILURE)
         {
             free(line);
-            return (terminator(c));
+            return (terminator2(c, ERR_MAP));
         }
         if (len > 0 && len != strlen(line))
         {
@@ -101,6 +103,6 @@ int parsing(int argc, const char *argv[], t_config *c)
     }
     free(line);
     if (last_check(c) == FAILURE)
-        return (FAILURE);
+        return (terminator2(c, ERR_MAP));
     return (SUCCESS);
 }
