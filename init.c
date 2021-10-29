@@ -3,7 +3,11 @@
 int init_struct_config(t_config *c)
 {
     c->txts = malloc(sizeof(t_all_txts));
+    if (!c->txts)
+        return (terminator2(c, ERR_TXT_MALLOC));
     c->txts->wl_txt = malloc(sizeof(t_txt));
+    if (!c->txts->wl_txt)
+        return (terminator2(c, ERR_TXT_MALLOC));
     c->txts->fl_txt = malloc(sizeof(t_txt));
     if (c->txts->fl_txt == NULL)
         return (terminator2(c, ERR_TXT_MALLOC));
@@ -16,7 +20,12 @@ int init_struct_config(t_config *c)
     c->txts->dr_txt = malloc(sizeof(t_txt));
     if (c->txts->dr_txt == NULL)
         return (terminator2(c, ERR_TXT_MALLOC));
-printf("SEGV 2\n");
+    c->sizex = malloc(sizeof(*c->sizex));
+    if (!c->sizex)
+        return (terminator2(c, ERR_MALLOC));
+    c->sizey = malloc(sizeof(*c->sizey));
+    if (!c->sizey)
+        return (terminator2(c, ERR_MALLOC));
     c->mlx = NULL;
     c->mlx_win = NULL;
     c->map = NULL;
@@ -44,5 +53,6 @@ printf("SEGV 2\n");
     c->collected = 0;
     c->open = 0;
     c->on_exit = FALSE;
+    c->zoom = ZOOM;
     return (SUCCESS);
 }

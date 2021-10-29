@@ -37,3 +37,39 @@ int key_hook(int keycode, t_config *c)
     }
     return (1);
 }
+
+int     fonction_enregistee_pour_souris(int button, int x, int y, t_config *c)
+{
+printf("souris x = %d\n", x);
+printf("souris y = %d\n", y);
+printf("souris b = %d\n", button);
+    int i;
+    int j;
+
+    i = 0;
+    j = 0;
+    (void)button;
+    if ((x < (RES_X - 10)) && (y < (RES_Y - 10)))
+    {
+        while (j < 10)
+        {
+            i = 0;
+            while (i < 10)
+            {
+                if (button == 1)
+                    my_mlx_pixel_put(c->img, x + i, y + j, RED);
+                else if (button == 2)
+                    my_mlx_pixel_put(c->img, x + i, y + j, BLUE);
+                else
+                    my_mlx_pixel_put(c->img, x + i, y + j, WHITE);
+
+
+                i++;
+            }
+            j++;
+        }
+    }
+    mlx_put_image_to_window(c->mlx, c->mlx_win, c->img->img, 0, 0);
+
+    return (1);
+}

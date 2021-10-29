@@ -10,7 +10,7 @@
 #define GREY 0x999999
 #define WHITE 0xFFFFFF
 #define SUCCESS 0
-#define FAILURE 1
+#define FAILURE 10
 #define TRUE 1
 #define FALSE 0
 # include <stdio.h>
@@ -35,7 +35,11 @@ enum
     ERR_MAP,
     ERR_DRAWING,
     ERR_NAME,
-    ERR_TXT_MALLOC
+    ERR_TXT_MALLOC,
+    ERR_MLX_NEW_WIN,
+    ERR_MLX_NEW_IMG,
+    ERR_MLX_XPM_GEN,
+    ERR_MALLOC
 };
 
 typedef struct  s_data {
@@ -83,6 +87,9 @@ typedef struct  s_config
     void        *mlx;
     void        *mlx_win;
     t_data      *img;
+    int         *sizex;
+    int         *sizey;
+    int         zoom;
     t_pt        player;
     t_pt        left;
     t_pt        right;
@@ -101,6 +108,7 @@ typedef struct  s_config
 
 // init.c
 int init_struct_config(t_config *c);
+int    start_mlx(t_config *c);
 
 // kill.c
 int     terminator(t_config *c); /*, int error AVEC CODES D'ERREUR CORRESPONDANTS)*/
@@ -131,6 +139,7 @@ int map_drawer(t_config *c);
 
 // hooks.c
 int key_hook(int keycode, t_config *c);
+int     fonction_enregistee_pour_souris(int button, int x, int y, t_config *c);
 
 // moves.c
 void    move(t_config *c, char keycode);
