@@ -43,7 +43,8 @@ int    start_mlx(t_config *c)
     c->mlx = mlx_init();
     if (c->mlx == NULL)
         return (FAILURE);
-    c->mlx_win = mlx_new_window(c->mlx, RES_X, RES_Y, "so_long");
+//mlx_get_screen_size()
+    c->mlx_win = mlx_new_window(c->mlx, (c->size_map.x + 1)* ZOOM, (c->size_map.y + 1) * ZOOM, "so_long");
  //  c->mlx_win = NULL;
     if (c->mlx_win == NULL)
     {
@@ -58,8 +59,19 @@ int    start_mlx(t_config *c)
     }
 	c->img->addr = mlx_get_data_addr(c->img->img, &c->img->bits_per_pixel, &c->img->line_length,
                         			&c->img->endian);
+    c->wl_txt->img = mlx_xpm_file_to_image(c->mlx, "img/wall.xpm", &c->wl_txt->width, &c->wl_txt->height);
+;
+    if (c->wl_txt->img == NULL)
+    {
+        terminator(c);  // ajouter destruction texture
+        return (FAILURE);
+    }
+	c->wl_txt->addr = mlx_get_data_addr(c->wl_txt->img, &c->wl_txt->bits_per_pixel, &c->wl_txt->line_length,
+                        			&c->wl_txt->endian);
+    
     return (SUCCESS);
 }
+
 
 // main.c
 int main(int argc, const char *argv[])
@@ -67,9 +79,11 @@ int main(int argc, const char *argv[])
 	// void	    *mlx;
 	// void    	*mlx_win;
 	t_data  	img;
+    t_txt     	wl_txt;
     t_config    c;
 
     c.img = &img;
+    c.wl_txt = &wl_txt;
     init_struct_config(&c);
     if (parsing(argc, argv, &c) == FAILURE)
         return (FAILURE);

@@ -23,7 +23,7 @@ MLX_DIR	= mlx
 
 CC =	gcc
 
-CFLAGS = -Wall -Werror -Wextra -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra# -fsanitize=address
 
 RM = 	rm -f
 

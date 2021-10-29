@@ -11,6 +11,8 @@
 #define WHITE 0xFFFFFF
 #define SUCCESS 0
 #define FAILURE 1
+#define TRUE 1
+#define FALSE 0
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -43,6 +45,16 @@ typedef struct  s_data {
     int     endian;
 }               t_data;
 
+typedef struct  s_txt {
+    void    *img;
+    char    *addr;
+    int     bits_per_pixel;
+    int     line_length;
+    int     endian;
+    int     width;
+    int     height;
+}               t_txt;
+
 typedef struct  s_pt
 {
     int x;
@@ -55,12 +67,22 @@ typedef struct  s_list
     struct s_list   *next;
 }               t_list;
 
+typedef struct  all_txts
+{
+    struct s_txt    *wl_txt;
+    struct s_txt    *fl_txt;
+    struct s_txt    *cl_txt;
+    struct s_txt    *key_txt;
+    struct s_txt    *kt_txt;
+}               t_all_txts;
+
 
 typedef struct  s_config
 {
     void    *mlx;
     void    *mlx_win;
     t_data  *img;
+    t_txt   *wl_txt;
     t_pt    player;
     t_pt    left;
     t_pt    right;
@@ -73,6 +95,7 @@ typedef struct  s_config
     int     open;
     char    **map;
     t_list  *lines;
+    int     on_exit;
 }              t_config;
 
 // init.c
@@ -88,6 +111,8 @@ int     ft_strncmp(const char *s1, const char *s2, size_t n);
 
 // mlx_utils.c
 void    my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int     get_pixel(t_txt *txt, int x, int y);
+
 
 // parsing.c
 int last_check(t_config *c);

@@ -7,6 +7,8 @@ void init_struct_config(t_config *c)
     c->map = NULL;
     c->img->img = NULL;
     c->img->addr = NULL;
+    c->wl_txt->img = NULL;
+    c->wl_txt->addr = NULL;
     c->lines = NULL;
     c->player.x = -1;
     c->player.y = -1;
@@ -18,4 +20,5 @@ void init_struct_config(t_config *c)
     c->lines = NULL;
     c->collected = 0;
     c->open = 0;
+    c->on_exit = FALSE;
 }

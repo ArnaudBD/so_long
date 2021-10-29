@@ -62,6 +62,12 @@ int terminator2(t_config *c, int code)
     t_list  *current;
     // if (error)
     // put_error(error);
+    // if (c->img->img)
+    //     mlx_destroy_image(c->mlx, c->img->img);
+    // if (c->mlx_win)
+    //     mlx_destroy_window(c->mlx, c->mlx_win);
+    // if (c->mlx)
+    //     mlx_destroy_display(c->mlx);
     current = c->lines;
     if (c->img->img != NULL)
         mlx_destroy_image(c->mlx, c->img->img);
@@ -71,7 +77,6 @@ int terminator2(t_config *c, int code)
     {
         mlx_destroy_display(c->mlx);
         free(c->mlx);
-        
     }
     while (current)
     {
@@ -80,15 +85,12 @@ int terminator2(t_config *c, int code)
         free(c->lines);
         c->lines = current;
     }
-    if (c->map != NULL)
+    if (c->map)
         free(c->map);
     if (code != 0)
     {
         display_error(code);
         return (FAILURE);
     }
-    // mlx_destroy_display(c->mlx);
-    // mlx_destroy_image(c->mlx, c->img->img);
-    // mlx_destroy_window(c->mlx, c->mlx_win);
     return (SUCCESS);
 }

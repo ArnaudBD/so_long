@@ -94,6 +94,8 @@ int parsing(int argc, const char *argv[], t_config *c)
             return (terminator2(c, ERR_MAP));
         len = strlen(line);
     }
+    if (strlen(line) == 0 && len == 0)
+        return(terminator2(c, ERR_READ));
     free(line);
     if (last_check(c) == FAILURE)
         return (terminator2(c, ERR_MAP));

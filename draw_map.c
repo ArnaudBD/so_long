@@ -48,6 +48,30 @@ int draw_the_square(t_config *c, int x, int y, char ch)
     return (SUCCESS);
 }
 
+int draw_the_texture(t_config *c, int x, int y, t_txt *txt)
+{
+   int  i;
+   int  j;
+   int  pixel;
+
+// if (ch == '1')
+//     return (put_wall(c, x, y, ch));
+    j = 0;
+    x *= ZOOM;
+    y *= ZOOM;
+    while (j < ZOOM)
+    {
+        i = 0;
+        while (i < ZOOM)
+        {
+            pixel = get_pixel(txt, i, j);
+            my_mlx_pixel_put(c->img, x + i, y + j, pixel);
+            i++;
+        }
+        j++;
+    }
+    return (SUCCESS);
+}
 
 int map_drawer(t_config *c)
 {
@@ -60,7 +84,18 @@ int map_drawer(t_config *c)
         x = 0;
         while (x <= c->size_map.x)
         {
-                if (draw_the_square(c, x, y, c->map[y][x]) == FAILURE)
+            if (c->map[y][x] == '1')
+                draw_the_texture(c, x, y, c->wl_txt);
+            if (c->map[y][x] == '0')
+                draw_the_texture(c, x, y, c->wl_txt);
+            if (c->map[y][x] == 'P')
+                draw_the_texture(c, x, y, c->wl_txt);
+            if (c->map[y][x] == 'E')
+                draw_the_texture(c, x, y, c->wl_txt);
+            if (c->map[y][x] == 'C')
+                draw_the_texture(c, x, y, c->wl_txt);
+
+                else if (draw_the_square(c, x, y, c->map[y][x]) == FAILURE)
                     return (terminator2(c, ERR_DRAWING));
                 if (c->map[y][x] == 'P')
                 {
