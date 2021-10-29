@@ -1,14 +1,37 @@
 # include "includes/so_long.h"
 
-void init_struct_config(t_config *c)
+int init_struct_config(t_config *c)
 {
+    c->txts = malloc(sizeof(t_all_txts));
+    c->txts->wl_txt = malloc(sizeof(t_txt));
+    c->txts->fl_txt = malloc(sizeof(t_txt));
+    if (c->txts->fl_txt == NULL)
+        return (terminator2(c, ERR_TXT_MALLOC));
+    c->txts->key_txt = malloc(sizeof(t_txt));
+    if (c->txts->key_txt == NULL)
+        return (terminator2(c, ERR_TXT_MALLOC));
+    c->txts->kt_txt = malloc(sizeof(t_txt));
+    if (c->txts->kt_txt == NULL)
+        return (terminator2(c, ERR_TXT_MALLOC));
+    c->txts->dr_txt = malloc(sizeof(t_txt));
+    if (c->txts->dr_txt == NULL)
+        return (terminator2(c, ERR_TXT_MALLOC));
+printf("SEGV 2\n");
     c->mlx = NULL;
     c->mlx_win = NULL;
     c->map = NULL;
     c->img->img = NULL;
     c->img->addr = NULL;
-    c->wl_txt->img = NULL;
-    c->wl_txt->addr = NULL;
+    c->txts->wl_txt->img = NULL;
+    c->txts->wl_txt->addr = NULL;
+    c->txts->fl_txt->img = NULL;
+    c->txts->fl_txt->addr = NULL;
+    c->txts->key_txt->img = NULL;
+    c->txts->key_txt->addr = NULL;
+    c->txts->dr_txt->img = NULL;
+    c->txts->dr_txt->addr = NULL;
+    c->txts->kt_txt->img = NULL;
+    c->txts->kt_txt->addr = NULL;
     c->lines = NULL;
     c->player.x = -1;
     c->player.y = -1;
@@ -21,4 +44,5 @@ void init_struct_config(t_config *c)
     c->collected = 0;
     c->open = 0;
     c->on_exit = FALSE;
+    return (SUCCESS);
 }

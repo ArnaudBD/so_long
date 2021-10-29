@@ -85,28 +85,28 @@ int map_drawer(t_config *c)
         while (x <= c->size_map.x)
         {
             if (c->map[y][x] == '1')
-                draw_the_texture(c, x, y, c->wl_txt);
+                draw_the_texture(c, x, y, c->txts->wl_txt);
             if (c->map[y][x] == '0')
-                draw_the_texture(c, x, y, c->wl_txt);
+                draw_the_texture(c, x, y, c->txts->fl_txt);
             if (c->map[y][x] == 'P')
-                draw_the_texture(c, x, y, c->wl_txt);
+                draw_the_texture(c, x, y, c->txts->kt_txt);
             if (c->map[y][x] == 'E')
-                draw_the_texture(c, x, y, c->wl_txt);
+                draw_the_texture(c, x, y, c->txts->dr_txt);
             if (c->map[y][x] == 'C')
-                draw_the_texture(c, x, y, c->wl_txt);
+                draw_the_texture(c, x, y, c->txts->key_txt);
 
-                else if (draw_the_square(c, x, y, c->map[y][x]) == FAILURE)
-                    return (terminator2(c, ERR_DRAWING));
-                if (c->map[y][x] == 'P')
-                {
-                    c->player.x = x;
-                    c->player.y = y;
-                }
-                if (c->map[y][x] == 'E')
-                {
-                    c->exit.x = x;
-                    c->exit.y = y;
-                }
+                // else if (draw_the_square(c, x, y, c->map[y][x]) == FAILURE)
+                //     return (terminator2(c, ERR_DRAWING));
+            if (c->map[y][x] == 'P')
+            {
+                c->player.x = x;
+                c->player.y = y;
+            }
+            if (c->map[y][x] == 'E')
+            {
+                c->exit.x = x;
+                c->exit.y = y;
+            }
             x++;
         }
         y++;

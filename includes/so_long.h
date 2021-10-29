@@ -34,7 +34,8 @@ enum
     ERR_MAP_LINE_MALLOC,
     ERR_MAP,
     ERR_DRAWING,
-    ERR_NAME
+    ERR_NAME,
+    ERR_TXT_MALLOC
 };
 
 typedef struct  s_data {
@@ -67,39 +68,39 @@ typedef struct  s_list
     struct s_list   *next;
 }               t_list;
 
-typedef struct  all_txts
+typedef struct  s_all_txts
 {
     struct s_txt    *wl_txt;
     struct s_txt    *fl_txt;
-    struct s_txt    *cl_txt;
     struct s_txt    *key_txt;
     struct s_txt    *kt_txt;
+    struct s_txt    *dr_txt;
 }               t_all_txts;
 
 
 typedef struct  s_config
 {
-    void    *mlx;
-    void    *mlx_win;
-    t_data  *img;
-    t_txt   *wl_txt;
-    t_pt    player;
-    t_pt    left;
-    t_pt    right;
-    t_pt    up;
-    t_pt    down;
-    t_pt    size_map;
-    t_pt    exit;
-    int     collectibles;
-    int     collected;
-    int     open;
-    char    **map;
-    t_list  *lines;
-    int     on_exit;
+    void        *mlx;
+    void        *mlx_win;
+    t_data      *img;
+    t_pt        player;
+    t_pt        left;
+    t_pt        right;
+    t_pt        up;
+    t_pt        down;
+    t_pt        size_map;
+    t_pt        exit;
+    int         collectibles;
+    int         collected;
+    int         open;
+    char        **map;
+    t_list      *lines;
+    int         on_exit;
+    t_all_txts  *txts;
 }              t_config;
 
 // init.c
-void init_struct_config(t_config *c);
+int init_struct_config(t_config *c);
 
 // kill.c
 int     terminator(t_config *c); /*, int error AVEC CODES D'ERREUR CORRESPONDANTS)*/

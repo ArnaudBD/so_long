@@ -59,15 +59,46 @@ int    start_mlx(t_config *c)
     }
 	c->img->addr = mlx_get_data_addr(c->img->img, &c->img->bits_per_pixel, &c->img->line_length,
                         			&c->img->endian);
-    c->wl_txt->img = mlx_xpm_file_to_image(c->mlx, "img/wall.xpm", &c->wl_txt->width, &c->wl_txt->height);
-;
-    if (c->wl_txt->img == NULL)
+    c->txts->wl_txt->img = mlx_xpm_file_to_image(c->mlx, "img/wall.xpm", &c->txts->wl_txt->width, &c->txts->wl_txt->height);
+    if (c->txts->wl_txt->img == NULL)
     {
         terminator(c);  // ajouter destruction texture
         return (FAILURE);
     }
-	c->wl_txt->addr = mlx_get_data_addr(c->wl_txt->img, &c->wl_txt->bits_per_pixel, &c->wl_txt->line_length,
-                        			&c->wl_txt->endian);
+	c->txts->wl_txt->addr = mlx_get_data_addr(c->txts->wl_txt->img, &c->txts->wl_txt->bits_per_pixel, &c->txts->wl_txt->line_length,
+                        			&c->txts->wl_txt->endian);
+    c->txts->fl_txt->img = mlx_xpm_file_to_image(c->mlx, "img/floor.xpm", &c->txts->fl_txt->width, &c->txts->fl_txt->height);
+    if (c->txts->fl_txt->img == NULL)
+    {
+        terminator(c);  // ajouter destruction texture
+        return (FAILURE);
+    }
+	c->txts->fl_txt->addr = mlx_get_data_addr(c->txts->fl_txt->img, &c->txts->fl_txt->bits_per_pixel, &c->txts->fl_txt->line_length,
+                        			&c->txts->fl_txt->endian);
+    c->txts->key_txt->img = mlx_xpm_file_to_image(c->mlx, "img/key.xpm", &c->txts->key_txt->width, &c->txts->key_txt->height);
+    if (c->txts->key_txt->img == NULL)
+    {
+        terminator(c);  // ajouter destruction texture
+        return (FAILURE);
+    }
+	c->txts->key_txt->addr = mlx_get_data_addr(c->txts->key_txt->img, &c->txts->key_txt->bits_per_pixel, &c->txts->key_txt->line_length,
+                        			&c->txts->key_txt->endian);
+    c->txts->dr_txt->img = mlx_xpm_file_to_image(c->mlx, "img/door.xpm", &c->txts->dr_txt->width, &c->txts->dr_txt->height);
+    if (c->txts->dr_txt->img == NULL)
+    {
+        terminator(c);  // ajouter destruction texture
+        return (FAILURE);
+    }
+	c->txts->dr_txt->addr = mlx_get_data_addr(c->txts->dr_txt->img, &c->txts->dr_txt->bits_per_pixel, &c->txts->dr_txt->line_length,
+                        			&c->txts->dr_txt->endian);
+    c->txts->kt_txt->img = mlx_xpm_file_to_image(c->mlx, "img/knight.xpm", &c->txts->kt_txt->width, &c->txts->kt_txt->height);
+    if (c->txts->kt_txt->img == NULL)
+    {
+        terminator(c);  // ajouter destruction texture
+        return (FAILURE);
+    }
+	c->txts->kt_txt->addr = mlx_get_data_addr(c->txts->kt_txt->img, &c->txts->kt_txt->bits_per_pixel, &c->txts->kt_txt->line_length,
+                        			&c->txts->kt_txt->endian);
     
     return (SUCCESS);
 }
@@ -79,12 +110,10 @@ int main(int argc, const char *argv[])
 	// void	    *mlx;
 	// void    	*mlx_win;
 	t_data  	img;
-    t_txt     	wl_txt;
     t_config    c;
-
     c.img = &img;
-    c.wl_txt = &wl_txt;
-    init_struct_config(&c);
+    if (init_struct_config(&c) == FAILURE)
+        return (FAILURE);
     if (parsing(argc, argv, &c) == FAILURE)
         return (FAILURE);
     show_list(&c);
