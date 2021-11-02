@@ -24,8 +24,10 @@ void    move(t_config *c, char keycode)
     set_possible_moves(c);
     if (keycode == 's')
     {
-        if (c->map[c->down.y][c->down.x] != '1')
+        if (c->map[c->down.y][c->down.x] != 'P')
         {
+            ft_putstr_fd("\rMoves = ", STDOUT_FILENO);
+            ft_putnbr_fd(++c->moves, STDOUT_FILENO);
             if (c->map[c->down.y][c->down.x] == 'C')
                 c->collected++;
             if (c->on_exit == TRUE)
@@ -43,8 +45,10 @@ void    move(t_config *c, char keycode)
     }
     else if (keycode == 'w')
     {
-        if (c->map[c->up.y][c->up.x] != '1')
+        if (c->map[c->up.y][c->up.x] != 'P')
         {
+            ft_putstr_fd("\rMoves = ", STDOUT_FILENO);
+            ft_putnbr_fd(++c->moves, STDOUT_FILENO);
             if (c->map[c->up.y][c->up.x] == 'C')
                 c->collected++;
             if (c->on_exit == TRUE)
@@ -62,8 +66,10 @@ void    move(t_config *c, char keycode)
     }
     else if (keycode == 'a')
     {
-        if (c->map[c->left.y][c->left.x] != '1')
+        if (c->map[c->left.y][c->left.x] != 'P')
         {
+            ft_putstr_fd("\rMoves = ", STDOUT_FILENO);
+            ft_putnbr_fd(++c->moves, STDOUT_FILENO);
             if (c->map[c->left.y][c->left.x] == 'C')
                 c->collected++;
             c->map[c->player.y][c->player.x] = '0';
@@ -82,8 +88,10 @@ void    move(t_config *c, char keycode)
     }
     else if (keycode == 'd')
     {
-        if (c->map[c->right.y][c->right.x] != '1')
+        if (c->map[c->right.y][c->right.x] != 'P')
         {
+            ft_putstr_fd("\rMoves = ", STDOUT_FILENO);
+            ft_putnbr_fd(++c->moves, STDOUT_FILENO);
             if (c->map[c->right.y][c->right.x] == 'C')
                 c->collected++;
             c->map[c->player.y][c->player.x] = '0';
@@ -98,6 +106,6 @@ void    move(t_config *c, char keycode)
                 c->on_exit = TRUE;
             c->map[c->right.y][c->right.x] = 'P';
             c->player = c->right;
-        }
+       }
     }
 }

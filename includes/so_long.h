@@ -2,7 +2,7 @@
 # define SO_LONG_H
 #define RES_Y 1080
 #define RES_X 1920
-#define ZOOM 100
+#define ZOOM 20
 #define RED 0xFF0000
 #define GREEN 0x00FF00
 #define BLUE 0x0000FF
@@ -104,6 +104,7 @@ typedef struct  s_config
     t_list      *lines;
     int         on_exit;
     t_all_txts  *txts;
+    int         moves;
 }              t_config;
 
 // init.c
@@ -140,8 +141,15 @@ int map_drawer(t_config *c);
 // hooks.c
 int key_hook(int keycode, t_config *c);
 int     fonction_enregistee_pour_souris(int button, int x, int y, t_config *c);
+int cross_clicked(t_config *c);
+int nada(void *arg);
 
 // moves.c
 void    move(t_config *c, char keycode);
+
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putnbr_fd(int n, int fd);
+void	ft_putchar_fd(char c, int fd);
+
 
 #endif

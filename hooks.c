@@ -73,3 +73,15 @@ printf("souris b = %d\n", button);
 
     return (1);
 }
+
+int cross_clicked(t_config *c)
+{
+    terminator2(c, 0);
+    return (0);
+}
+
+int nada(void *arg)
+{
+    (void)arg;
+    return (0);
+}

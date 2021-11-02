@@ -12,7 +12,10 @@ SRCS = 		main.c\
 			draw_map.c\
 			mlx_utils.c\
 			hooks.c\
-			moves.c
+			moves.c\
+			ft_putnbr_fd.c\
+			ft_putstr_fd.c\
+			ft_putchar_fd.c
 				
 
 OBJS =	$(SRCS:.c=.o)

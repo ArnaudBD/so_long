@@ -31,8 +31,10 @@ int main(int argc, const char *argv[])
     // fill_color(&img, BLACK);
     // mlx_put_image_to_window(c.mlx, c.mlx_win, c.img->img, 0, 0);
     mlx_mouse_hook(c.mlx_win, fonction_enregistee_pour_souris, &c);
+    mlx_hook(c.mlx_win, 33, 0L, cross_clicked, &c);
     if (mlx_key_hook(c.mlx_win, key_hook, &c) == FAILURE)
         return (FAILURE);
+    mlx_loop_hook(c.mlx, nada, NULL);
     mlx_loop(c.mlx);
     terminator2(&c, 0);
     return (1);

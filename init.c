@@ -54,5 +54,6 @@ int init_struct_config(t_config *c)
     c->open = 0;
     c->on_exit = FALSE;
     c->zoom = ZOOM;
+    c->moves = 0;
     return (SUCCESS);
 }
