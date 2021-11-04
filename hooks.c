@@ -1,87 +1,68 @@
-# include "includes/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abiju-du <abiju-du@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/04 19:20:45 by abiju-du          #+#    #+#             */
+/*   Updated: 2021/11/04 19:33:34 by abiju-du         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void    fill_color(t_data *img, int color)
+#include "includes/so_long.h"
+
+void	fill_color(t_data *img, int color)
 {
-    int x = 0;
-    int y = 0;
-    while (y < RES_Y)
-    {
-        x = 0;
-        while (x < RES_X)
-        {
-            my_mlx_pixel_put(img, x, y, color);
-            x++;
-        }
-        y++;
-    }
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (y < RES_Y)
+	{
+		x = 0;
+		while (x < RES_X)
+		{
+			my_mlx_pixel_put(img, x, y, color);
+			x++;
+		}
+		y++;
+	}
 }
 
-int key_hook(int keycode, t_config *c)
+int	key_hook(int keycode, t_config *c)
 {
-    if (keycode == 65307)
-    {
-        terminator2(c, 0);
-        exit(SUCCESS);
-    }
-    else if (keycode == 'w' || keycode == 'a' || keycode == 's' || keycode == 'd')
-    {
-        move(c, keycode);
-        map_drawer(c);
-        mlx_put_image_to_window(c->mlx, c->mlx_win, c->img->img, 0, 0);
-    }
-    if (c->on_exit == TRUE
-    && c->collected == c->collectibles)
-    {
-        terminator2(c, 0);
-        exit(SUCCESS);
-    }
-    return (1);
+	if (keycode == 65307)
+	{
+		terminator2(c, 0);
+		exit(SUCCESS);
+	}
+	else if (keycode == 'w'
+		|| keycode == 'a' || keycode == 's' || keycode == 'd')
+	{
+		move(c, keycode);
+		map_drawer(c);
+		mlx_put_image_to_window(c->mlx, c->mlx_win, c->img->img, 0, 0);
+	}
+	if (c->on_exit == TRUE
+		&& c->collected == c->collectibles)
+	{
+		terminator2(c, 0);
+		exit(SUCCESS);
+	}
+	return (1);
 }
 
-int     fonction_enregistee_pour_souris(int button, int x, int y, t_config *c)
+int	cross_clicked(t_config *c)
 {
-printf("souris x = %d\n", x);
-printf("souris y = %d\n", y);
-printf("souris b = %d\n", button);
-    int i;
-    int j;
-
-    i = 0;
-    j = 0;
-    (void)button;
-    if ((x < (RES_X - 10)) && (y < (RES_Y - 10)))
-    {
-        while (j < 10)
-        {
-            i = 0;
-            while (i < 10)
-            {
-                if (button == 1)
-                    my_mlx_pixel_put(c->img, x + i, y + j, RED);
-                else if (button == 2)
-                    my_mlx_pixel_put(c->img, x + i, y + j, BLUE);
-                else
-                    my_mlx_pixel_put(c->img, x + i, y + j, WHITE);
-
-
-                i++;
-            }
-            j++;
-        }
-    }
-    mlx_put_image_to_window(c->mlx, c->mlx_win, c->img->img, 0, 0);
-
-    return (1);
+	terminator2(c, 0);
+	exit(0);
+	return (SUCCESS);
 }
 
-int cross_clicked(t_config *c)
+int	nada(void *arg)
 {
-    terminator2(c, 0);
-    return (0);
-}
-
-int nada(void *arg)
-{
-    (void)arg;
-    return (0);
+	(void)arg;
+	return (0);
 }

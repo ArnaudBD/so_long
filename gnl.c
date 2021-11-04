@@ -1,6 +1,17 @@
-#include "includes/gnl.h"
-# include "includes/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gnl.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abiju-du <abiju-du@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/04 19:10:02 by abiju-du          #+#    #+#             */
+/*   Updated: 2021/11/04 19:10:06 by abiju-du         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "includes/gnl.h"
+#include "includes/so_long.h"
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
@@ -37,7 +48,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	s1_len = ft_strlen((char *)s1);
 	s2_len = ft_strlen((char *)s2);
 	s_len = s1_len + s2_len;
-    str_join = malloc(sizeof(*str_join) * s_len + 1);
+	str_join = malloc(sizeof(*str_join) * s_len + 1);
 	if (!(str_join))
 		return (0);
 	ft_memmove(str_join, s1, s1_len);
@@ -65,31 +76,41 @@ char	*mv_next_line(char **line, char *str)
 	return (str = str + i + 1);
 }
 
-int		get_next_line(int fd, char **line)
+int	read_error(int bytes_read, char **line)
 {
-	static char	*str;
+	if (bytes_read <= 0)
+	{
+		if (bytes_read == -1)
+		{
+			line[0] = malloc(1);
+			line[0] = 0;
+			return (-1);
+		}
+	}
+	return (0);
+}
+
+int	get_next_line(int fd, char **line)
+{
+	static char	*str[256];
 	char		buf[BUFFER_SIZE + 1];
 	int			bytes_read;
 
-    bytes_read = BUFFER_SIZE;
+	bytes_read = BUFFER_SIZE;
 	if (bytes_read < 1 || !line || fd < 0
-			|| read(fd, buf, 0) != 0)
+		|| read(fd, buf, 0) != 0)
 		return (-1);
-	while (n_search(str) == -1 && bytes_read != 0)
+	while (n_search(str[fd]) == -1 && bytes_read != 0)
 	{
-		if ((bytes_read = read(fd, buf, BUFFER_SIZE)) <= 0)
-			if (bytes_read == -1)
-			{
-				line[0] = malloc(1);
-				line[0] = 0;
-				return (-1);
-			}
+		bytes_read = read(fd, buf, BUFFER_SIZE);
+		if (read_error(bytes_read, line) == -1)
+			return (-1);
 		buf[bytes_read] = 0;
-		str = ft_strjoin(str, buf);
+		str[fd] = ft_strjoin(str[fd], buf);
 	}
-	if (mv_first_line(str, line) == -1)
+	if (mv_first_line(str[fd], line) == -1)
 		return (-1);
-	str = sup_first_line(str);
+	str[fd] = sup_first_line(str[fd]);
 	if (bytes_read <= 0)
 		return (bytes_read);
 	return (1);

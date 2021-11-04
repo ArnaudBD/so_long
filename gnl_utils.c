@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gnl_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abiju-du <abiju-du@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/04 19:15:38 by abiju-du          #+#    #+#             */
+/*   Updated: 2021/11/04 19:17:54 by abiju-du         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "includes/gnl.h"
 #include "includes/so_long.h"
 
-int		n_search(char *str)
+int	n_search(char *str)
 {
-	int i;
+	int	i;
 
 	if (str == NULL)
 		return (-1);
@@ -16,7 +28,7 @@ int		n_search(char *str)
 		return (-1);
 }
 
-int		mv_first_line(char *str, char **dest)
+int	mv_first_line(char *str, char **dest)
 {
 	int	i;
 
@@ -29,7 +41,8 @@ int		mv_first_line(char *str, char **dest)
 	}
 	while (str[i] != '\n' && str[i] != 0 && str[i] != EOF)
 		i++;
-	if (!(dest[0] = malloc(sizeof(char) * i + 1)))
+	dest[0] = malloc(sizeof(char) * i + 1);
+	if (!dest[0])
 		return (-1);
 	dest[0][i--] = 0;
 	while (i >= 0)
@@ -52,17 +65,15 @@ char	*sup_first_line(char *str)
 	new_str = NULL;
 	while (str[i] != '\n' && str[i] != 0)
 		i++;
-	if ((len = ft_strlen(str) - i - 1) >= 0)
+	len = ft_strlen(str) - i - 1;
+	if (len >= 0)
 	{
-		if (!(new_str = malloc(sizeof(*new_str) * len + 1)))
+		new_str = malloc(sizeof(*new_str) * len + 1);
+		if (!new_str)
 			return (0);
 		i++;
 		while (j < len)
-		{
-			new_str[j] = str[i];
-			i++;
-			j++;
-		}
+			new_str[j++] = str[i++];
 		new_str[j] = 0;
 	}
 	free(str);

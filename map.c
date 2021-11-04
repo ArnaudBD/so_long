@@ -1,79 +1,90 @@
-# include "includes/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abiju-du <abiju-du@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/04 19:47:34 by abiju-du          #+#    #+#             */
+/*   Updated: 2021/11/04 19:49:59 by abiju-du         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int add_line_in_lines(char *line, t_config *c)
+#include "includes/so_long.h"
+
+int	add_line_in_lines(char *line, t_config *c)
 {
-    t_list  *new;
-    new = malloc(sizeof(*new));
-    if (new == NULL)
-        return (FAILURE);
-    new->next = c->lines;
-    new->data = line;
-    c->lines = new;
-    return (SUCCESS);
+	t_list	*new;
+
+	new = malloc(sizeof(*new));
+	if (new == NULL)
+		return (FAILURE);
+	new->next = c->lines;
+	new->data = line;
+	c->lines = new;
+	return (SUCCESS);
 }
 
-int map_size_calculator(t_config *c)
+int	map_size_calculator(t_config *c)
 {
-    // t_pt    *map_size;
-    t_list  *current;
+	t_list	*current;
 
-    // map_size = NULL;
-    c->size_map.x = -1;
-    c->size_map.y = 0;
-    c->size_map.x += ft_strlen((char *)c->lines->data);
-    current = c->lines;
-    c->size_map.y = 0;
-    while (current->next)
-    {
-        c->size_map.y++;
-        current = current->next;
-    }
-    return (SUCCESS);
+	c->size_map.x = -1;
+	c->size_map.y = 0;
+	c->size_map.x += ft_strlen((char *)c->lines->data);
+	current = c->lines;
+	c->size_map.y = 0;
+	while (current->next)
+	{
+		c->size_map.y++;
+		current = current->next;
+	}
+	return (SUCCESS);
 }
 
-int create_map(t_config *c)
+int	create_map(t_config *c)
 {
-    int     i;
-    t_list  *current;
-    int     map_size;
+	int		i;
+	t_list	*current;
+	int		map_size;
 
-    current = c->lines;
-    map_size_calculator(c);
-    i = c->size_map.y;
-    map_size = (c->size_map.y + 1) * (c->size_map.x + 2) + 1;
-    (c->map) = malloc(sizeof(char) * map_size);
-    if (c->map == NULL)
-        return (terminator2(c, ERR_MAP_MALLOC));
-    while (current)
-    {
-        (c->map)[i] = current->data;
-        i--;
-        current = current->next;
-    }
-    return (SUCCESS);
+	current = c->lines;
+	map_size_calculator(c);
+	i = c->size_map.y;
+	map_size = (c->size_map.y + 1) * (c->size_map.x + 2) + 1;
+	(c->map) = malloc(sizeof(char) * map_size);
+	if (c->map == NULL)
+		return (terminator2(c, ERR_MAP_MALLOC));
+	while (current)
+	{
+		(c->map)[i] = current->data;
+		i--;
+		current = current->next;
+	}
+	return (SUCCESS);
 }
 
-void show_list(t_config *c)
+void	show_list(t_config *c)
 {
-    t_list *current;
+	t_list	*current;
 
-    current = c->lines;
-    while (current)
-    {
-        printf("|%s|\n", (char *)current->data);
-        current = current->next;
-    }
+	current = c->lines;
+	while (current)
+	{
+		printf("|%s|\n", (char *)current->data);
+		current = current->next;
+	}
 }
 
-void    show_map(t_config *c)
+void	show_map(t_config *c)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    printf("          | THE MAP |\n          V         V\n");
-    while (i <= c->size_map.y)
-    {
-        printf("i == %d - |%s|\n", i, c->map[i]);
-        i++;
-    }
+	i = 0;
+	printf("          | THE MAP |\n          V         V\n");
+	while (i <= c->size_map.y)
+	{
+		printf("i == %d - |%s|\n", i, c->map[i]);
+		i++;
+	}
 }
