@@ -41,6 +41,7 @@ int	terminator2(t_config *c, int code)
 {
 	t_list	*current;
 
+	write(1, "\n", 1);
 	current = c->lines;
 	if (c->img->img != NULL)
 		mlx_destroy_image(c->mlx, c->img->img);
