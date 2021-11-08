@@ -85,6 +85,9 @@ int	gnl_parsing(t_config *c, int fd, char **line, size_t len)
 		if (parse_line(*line, c) == FAILURE)
 		{
 			free(*line);
+			while (get_next_line(fd, line) == 1)
+				free(*line);
+			free(*line);
 			return (terminator2(c, ERR_MAP));
 		}
 		if (len > 0 && len != strlen(*line))

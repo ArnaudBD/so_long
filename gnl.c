@@ -112,6 +112,9 @@ int	get_next_line(int fd, char **line)
 		return (-1);
 	str[fd] = sup_first_line(str[fd]);
 	if (bytes_read <= 0)
+	{
+		free(str[fd]);
 		return (bytes_read);
+	}
 	return (1);
 }
